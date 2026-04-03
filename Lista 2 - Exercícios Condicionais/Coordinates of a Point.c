@@ -16,8 +16,11 @@ int main() {
         printf("Q4\n");
     }else if(x == 0 && y == 0){
         printf("Origem\n");
+    }else if(x == 0){
+        printf("Eixo Y\n");
+    }else if(y == 0){
+        printf("Eixo X\n");
     }
-
 
     return 0;
 }

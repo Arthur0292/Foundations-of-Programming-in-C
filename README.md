@@ -1,6 +1,6 @@
-# 🚀 Meus Estudos em Linguagem C
+# 🚀 Listas em Linguagem C
 
-Repositório dedicado ao desenvolvimento de lógica de programação utilizando a linguagem **C**. Aqui organizo todos os exercícios resolvidos, estruturados por níveis de complexidade.
+Repositório dedicado ao desenvolvimento de lógica de programação utilizando a linguagem **C**.
 
 > "A prática constante é o segredo para dominar a sintaxe e a lógica."
 

@@ -1,34 +1,34 @@
-# 🚀 Listas em Linguagem C
+# 🚀 C Language Exercises
 
-Repositório dedicado ao desenvolvimento de lógica de programação utilizando a linguagem **C**.
+A repository dedicated to developing programming logic using the **C** language.
 
-> "A prática constante é o segredo para dominar a sintaxe e a lógica."
-
----
-
-## 📂 Organização do Repositório
-
-O projeto está dividido em pastas temáticas para facilitar o estudo e a revisão de conceitos específicos:
-
-* **Lista 1 - Exercícios Sequenciais:** Foco em entrada e saída de dados (`scanf`/`printf`) e operações matemáticas básicas.
-* **Lista 2 - Exercícios Condicionais:** Prática com estruturas de decisão como `if`, `else` e `switch`.
-* **Lista 3 - Exercícios de Repetição:** Implementação de laços de controle como `for`, `while` e `do-while`.
-* **Lista 4 - Exercícios de Subalgoritmos:** Prática avançada com modularização de código, criação de **funções** e passagem de parâmetros.
+> "Constant practice is the secret to mastering syntax and logic."
 
 ---
 
-## 🛠️ Tecnologias e Ferramentas
+## 📂 Repository Structure
 
-* **Linguagem:** C (Padrão C11/C17)
-* **Compilador:** GCC
-* **Ambiente de Desenvolvimento:** VS Code / Terminal
+The project is divided into thematic folders to facilitate study and the review of specific concepts:
+
+* **List 1 - Sequential Exercises:** Focus on data input and output (`scanf`/`printf`) and basic mathematical operations.
+* **List 2 - Conditional Exercises:** Practice with decision structures such as `if`, `else`, and `switch`.
+* **List 3 - Repetition Exercises:** Implementation of control loops like `for`, `while`, and `do-while`.
+* **List 4 - Subalgorithms:** Advanced practice with code modularization, creating **functions**, and passing parameters.
 
 ---
 
-## 💻 Como Executar os Códigos
+## 🛠️ Technologies and Tools
 
-Para testar qualquer um dos exercícios localmente:
+* **Language:** C (C11/C17 Standard)
+* **Compiler:** GCC
+* **Development Environment:** VS Code / Terminal
 
-1. Clone o repositório:
+---
+
+## 💻 How to Run the Code
+
+To test any of the exercises locally:
+
+1. Clone the repository:
    ```bash
    git clone [https://github.com/Arthur0292/C.git](https://github.com/Arthur0292/C.git)

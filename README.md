@@ -13,6 +13,7 @@ O projeto está dividido em pastas temáticas para facilitar o estudo e a revis�
 * **Lista 1 - Exercícios Sequenciais:** Foco em entrada e saída de dados (`scanf`/`printf`) e operações matemáticas básicas.
 * **Lista 2 - Exercícios Condicionais:** Prática com estruturas de decisão como `if`, `else` e `switch`.
 * **Lista 3 - Exercícios de Repetição:** Implementação de laços de controle como `for`, `while` e `do-while`.
+* **Lista 4 - Exercícios de Subalgoritmos:** Prática avançada com modularização de código, criação de **funções** e passagem de parâmetros.
 
 ---
 

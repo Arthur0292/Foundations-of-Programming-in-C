@@ -13,7 +13,8 @@ The project is divided into thematic folders to facilitate study and the review 
 * **List 1 - Sequential Exercises:** Focus on data input and output (`scanf`/`printf`) and basic mathematical operations.
 * **List 2 - Conditional Exercises:** Practice with decision structures such as `if`, `else`, and `switch`.
 * **List 3 - Repetition Exercises:** Implementation of control loops like `for`, `while`, and `do-while`.
-* **List 4 - Subalgorithms:** Advanced practice with code modularization, creating **functions**, and passing parameters by value and reference (pointers)..
+* **List 4 - Subalgorithms:** Advanced practice with code modularization, creating **functions**, and passing parameters by value and reference (pointers).
+* **List 5 - Arrays (Vectors):** Manipulation of one-dimensional structures, focusing on indexing, data storage, and linear traversal.
 
 ---
 

@@ -4,7 +4,7 @@
 int main(){
     char alfabeto[27];
     char frase[1001];
-    int n, tamanho, vezes = 0, resultado;
+    int n, tamanho, vezes = 0;
 
     scanf("%d", &n);
 

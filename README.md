@@ -16,7 +16,7 @@ The project is divided into thematic folders to facilitate study and the review 
 * **List 4 - Subalgorithms:** Advanced practice with code modularization, creating **functions**, and passing parameters by value and reference (pointers).
 * **List 5 - Arrays (Vectors):** Manipulation of one-dimensional structures, focusing on indexing, data storage, and linear traversal.*
 * **List 6 - Matrices:** Working with multi-dimensional arrays, covering matrix initialization, nested loops for traversal, and operations like calculating diagonals, sums, and averages of specific areas.
-* 
+* **List 7 - Strings:** Handling character arrays, exploring the string.h library (functions like strlen, strcpy, strcat, and strcmp), buffer management, and text processing logic.
 
 ---
 

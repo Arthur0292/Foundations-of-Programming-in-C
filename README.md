@@ -1,4 +1,4 @@
-# 🚀 C Language Exercises
+# *C* Language Exercises
 
 A repository dedicated to developing programming logic using the **C** language.
 
@@ -6,7 +6,7 @@ A repository dedicated to developing programming logic using the **C** language.
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 The project is divided into thematic folders to facilitate study and the review of specific concepts:
 
@@ -20,7 +20,7 @@ The project is divided into thematic folders to facilitate study and the review 
 
 ---
 
-## 🛠️ Technologies and Tools
+## Technologies and Tools
 
 * **Language:** C (C11/C17 Standard)
 * **Compiler:** GCC
@@ -28,7 +28,7 @@ The project is divided into thematic folders to facilitate study and the review 
 
 ---
 
-## 💻 How to Run the Code
+## How to Run the Code
 
 To test any of the exercises locally:
 

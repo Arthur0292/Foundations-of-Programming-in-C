@@ -1,26 +1,35 @@
 #include <stdio.h>
+#include <string.h>
 
-int main() {
-    int x;
-    scanf("%d", &x);
+int main(){
+    
+    
+    int n;
+    scanf("%d", &n);
 
-    if(x == 1){
+    if(n == 1){
         printf("Top 1\n");
-    }else if((x >= 2 ) && (x <= 3)){
+    }else if(n <= 3){
         printf("Top 3\n");
-    }else if((x >= 4 ) && (x <= 5)){
+    }else if(n <= 5){
         printf("Top 5\n");
-    }else if((x >= 6 ) && (x <= 10)){
+    }else if(n <=10){
         printf("Top 10\n");
-    }else if((x >= 11 ) && (x <= 25)){
+    }else if(n <= 25){
         printf("Top 25\n");
-    }else if((x >= 26 ) && (x <= 50)){
+    }else if(n <= 50){
         printf("Top 50\n");
-    }else if((x >= 51 ) && (x <= 100)){
+    }else if(n <= 100){
         printf("Top 100\n");
     }
 
 
-    return 0;
 
+    
+
+
+    
+
+
+    return 0;
 }

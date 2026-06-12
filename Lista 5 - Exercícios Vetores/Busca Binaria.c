@@ -14,7 +14,7 @@ int buscaBinaria(int *vet, int valor, int inicio, int fim){
             }
         }
     }
-    return -1; //Valor não encontardo no vetor;
+    return -1; //Valor não encontrado no vetor;
 }
 
 int main() {

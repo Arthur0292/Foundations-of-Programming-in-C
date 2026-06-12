@@ -2,8 +2,6 @@
 
 A repository dedicated to developing programming logic using the **C** language.
 
-> "Constant practice is the secret to mastering syntax and logic."
-
 ---
 
 ## Repository Structure

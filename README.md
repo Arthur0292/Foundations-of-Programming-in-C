@@ -16,6 +16,7 @@ The project is divided into thematic folders to facilitate study and the review 
 * **List 6 - Matrices:** Working with multi-dimensional arrays, covering matrix initialization, nested loops for traversal, and operations like calculating diagonals, sums, and averages of specific areas.
 * **List 7 - Strings:** Handling character arrays, exploring the string.h library (functions like strlen, strcpy, strcat, and strcmp), buffer management, and text processing logic.
 * **List 8 - Structs:** Creation of user-defined data types, grouping different variables under a single name, and managing complex data structures through arrays of structs.
+* **List 9 - Recursion:** Understanding functions that call themselves, defining base and recursive cases, stack overflow prevention, and solving problems using divide-and-conquer logic.
 
 ---
 

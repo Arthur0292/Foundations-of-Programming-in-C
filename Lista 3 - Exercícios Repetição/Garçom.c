@@ -9,7 +9,7 @@ int main() {
     scanf("%d %d", &latas, &copos);
 
     if(latas > copos){
-        soma = copos;
+        soma += copos;
     }
 
     }

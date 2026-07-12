@@ -133,6 +133,7 @@ void mainJogo(){
 
         while(banco1 == ' ' || banco2 == ' ' || banco3 == ' '){ //Enquanto os bancos estao vazios repete
             limparTela();
+            
             printf("+----o--------o----+\n");
             printf("|    -    -    -   |---+\n");
             printf("|   |%c   |%c  |%c    | %c |\n", banco1, banco2, banco3, lista[cont].ordemOnibus[i]);
@@ -153,58 +154,59 @@ void mainJogo(){
             printf("\n");
 
     
-        printf("Informe a linha e coluna para embarcar no onibus: ");
+            printf("Informe a linha e coluna para embarcar no onibus: ");
         
-        int linha, coluna;  
+            int linha, coluna;  
 
-        scanf("%d %d", &linha, &coluna);    //leio a linha e coluna da matriz
+            scanf("%d %d", &linha, &coluna);    //leio a linha e coluna da matriz
 
-        if(linhaMatriz[linha][coluna] == '_'){   //Caso seja uma parede ou fora da matriz imprimi erro
-            printf("Posicao invalida tecle <enter> para voltar\n");
-            getchar();
-            getchar();
-        }
-
-        if(linhaMatriz[linha][coluna] == lista[cont].ordemOnibus[i]){   //Se o caracter for = ao onibus
-        
-        if(linha == 0){ //Se for o primeiro da fila
-            if(banco1 == ' '){
-                banco1 = linhaMatriz[linha][coluna];
-                linhaMatriz[linha][coluna] = ' ';
-            }else if(banco2 == ' '){
-                banco2 = linhaMatriz[linha][coluna];
-                linhaMatriz[linha][coluna] = ' ';
-            }else if(banco3 == ' '){
-                banco3 = linhaMatriz[linha][coluna];
-                linhaMatriz[linha][coluna] = ' ';
-            }
-        }else{
-            if(linhaMatriz[linha - 1][coluna] != ' '){      //Se tiver algum caracter na frente retorna erro
-                printf("Elemento bloqueado tecle <enter> para voltar");
+            if(linhaMatriz[linha][coluna] == '_'){   //Caso seja uma parede ou fora da matriz imprimi erro
+                printf("Posicao invalida tecle <enter> para voltar\n");
                 getchar();
                 getchar();
-            }else{  //Senao verifica qual banco esta livre
-                if(banco1 == ' '){
-                banco1 = linhaMatriz[linha][coluna];
-                linhaMatriz[linha][coluna] = ' ';
-            }else if(banco2 == ' '){
-                banco2 = linhaMatriz[linha][coluna];
-                linhaMatriz[linha][coluna] = ' ';
-            }else if(banco3 == ' '){
-                banco3 = linhaMatriz[linha][coluna];
-                linhaMatriz[linha][coluna] = ' ';
             }
-            }
-        }
+
+            if(linhaMatriz[linha][coluna] == lista[cont].ordemOnibus[i]){   //Se o caracter for = ao onibus
+        
+                if(linha == 0){ //Se for o primeiro da fila
+                    
+                    if(banco1 == ' '){
+                        banco1 = linhaMatriz[linha][coluna];
+                        linhaMatriz[linha][coluna] = ' ';
+                    }else if(banco2 == ' '){
+                        banco2 = linhaMatriz[linha][coluna];
+                        linhaMatriz[linha][coluna] = ' ';
+                    }else if(banco3 == ' '){
+                        banco3 = linhaMatriz[linha][coluna];
+                        linhaMatriz[linha][coluna] = ' ';
+                    }
+                }else{
+                    if(linhaMatriz[linha - 1][coluna] != ' '){      //Se tiver algum caracter na frente retorna erro
+                        printf("Elemento bloqueado tecle <enter> para voltar");
+                        getchar();
+                        getchar();
+                    }else{  //Senao verifica qual banco esta livre
+                        if(banco1 == ' '){
+                        banco1 = linhaMatriz[linha][coluna];
+                        linhaMatriz[linha][coluna] = ' ';
+                        }else if(banco2 == ' '){
+                        banco2 = linhaMatriz[linha][coluna];
+                        linhaMatriz[linha][coluna] = ' ';
+                        }else if(banco3 == ' '){
+                        banco3 = linhaMatriz[linha][coluna];
+                        linhaMatriz[linha][coluna] = ' ';
+                        }
+                    }
+                }
 
         
+            }
+
+        }
     }
-}
-}
-    
+
     cont++; //Adiciono no contador de fase
-    proximaFase();
-    
+    proximaFase();   
 }
 
 int main(){

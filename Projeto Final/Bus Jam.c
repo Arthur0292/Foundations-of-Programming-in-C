@@ -121,46 +121,66 @@ void proximaFase(){  //Funcao de proxima fase
 
 }
 
-void mainJogo(){
-    limparTela();   //Limpo a tela e carrego a fase
+void mainJogo(){    //Funcao principal do jogo
+    limparTela(); 
     carregarFase();
 
+    char filaEspera[5][2] = {"_", "_", "_", "_", "_"}; //Fila de espera
+
+    
     for(int i = 0; i<lista[cont].quantOnibus; i++){
         limparTela();
         char banco1 = ' ';  //Caracteres do banco
         char banco2 = ' ';
         char banco3 = ' ';
 
+        int filaVazia = 0;
+
         while(banco1 == ' ' || banco2 == ' ' || banco3 == ' '){ //Enquanto os bancos estao vazios repete
             limparTela();
+
+            printf("*** JOGO DO %s ***\n", nomeJogo);
+            printf("\n");
             
             printf("+----o--------o----+\n");
-            printf("|    -    -    -   |---+\n");
-            printf("|   |%c   |%c  |%c    | %c |\n", banco1, banco2, banco3, lista[cont].ordemOnibus[i]);
-            printf("|    -    -    -   |---+\n");
+            printf("|    -    -    -   |-+\n");
+            printf("|   |%c   |%c   |%c   |%c|\n", banco1, banco2, banco3, lista[cont].ordemOnibus[i]);
+            printf("|    -    -    -   |-+\n");
             printf("+----o---===--o----+\n");
 
             printf("\n");
 
+            for(int j = 0; j<5; j++){   //Fila de espera
+                if(i == 4){
+                    printf("%s\n", filaEspera[j]);
+                }else{
+                    printf("%s ", filaEspera[j]);
+                }
+            }
 
-            int aux = 0;    //Numero de linhas
-            for(int i = 0; i<lista[cont].quantLinhas; i++){
-                printf("%d %s\n", aux, linhaMatriz[i]);
+            printf("\n");
+            printf("\n");
+
+
+
+            int aux = 0;    //Numero das linhas
+            for(int j = 0; j<lista[cont].quantLinhas; j++){ //Imprimi a Matriz
+                printf("%d %s\n", aux, linhaMatriz[j]);
                 aux++;
             }
             
-            printf("   %s\n", lixo);//Numero de colunas
+            printf("   %s\n", lixo);    //Numero das colunas
         
             printf("\n");
 
     
             printf("Informe a linha e coluna para embarcar no onibus: ");
         
-            int linha, coluna;  
+            int linha, coluna; 
 
             scanf("%d %d", &linha, &coluna);    //leio a linha e coluna da matriz
 
-            if(linhaMatriz[linha][coluna] == '_'){   //Caso seja uma parede ou fora da matriz imprimi erro
+            if(linhaMatriz[linha][coluna] == '_' || linhaMatriz[linha][coluna] == ' '){   //Caso seja uma parede ou fora da matriz imprimi erro
                 printf("Posicao invalida tecle <enter> para voltar\n");
                 getchar();
                 getchar();
@@ -169,8 +189,7 @@ void mainJogo(){
             if(linhaMatriz[linha][coluna] == lista[cont].ordemOnibus[i]){   //Se o caracter for = ao onibus
         
                 if(linha == 0){ //Se for o primeiro da fila
-                    
-                    if(banco1 == ' '){
+                    if(banco1 == ' '){  //Verifica qual banco esta livre e troca
                         banco1 = linhaMatriz[linha][coluna];
                         linhaMatriz[linha][coluna] = ' ';
                     }else if(banco2 == ' '){
@@ -185,7 +204,7 @@ void mainJogo(){
                         printf("Elemento bloqueado tecle <enter> para voltar");
                         getchar();
                         getchar();
-                    }else{  //Senao verifica qual banco esta livre
+                    }else{  //Senao verifica qual banco esta livre e troca
                         if(banco1 == ' '){
                         banco1 = linhaMatriz[linha][coluna];
                         linhaMatriz[linha][coluna] = ' ';
@@ -198,9 +217,38 @@ void mainJogo(){
                         }
                     }
                 }
+            
+            }else{//Se o caracter nao for = onibus
 
-        
+                if(linha == 0){ //Se estiver na primeira linha
+                    for(int k = 0; k<5; i++){   //Caso o banco esteja vazio entra nesse banco
+                        if(strcmp(filaEspera[k], "_") == 0){
+                            filaEspera[k][0] = linhaMatriz[linha][coluna];
+                            filaEspera[k][1] = '\0';
+                            linhaMatriz[linha][coluna] = ' ';  //Caracter dentro da matriz vira um espaco
+                            break;
+                        }
+                    }
+                }else{
+                    if(linhaMatriz[linha - 1][coluna] != ' '){      //Se tiver algum caracter na frente retorna erro
+                        printf("Elemento bloqueado tecle <enter> para voltar");
+                        getchar();
+                        getchar();
+                    }else{
+                        for(int k = 0; k<5; k++){   //Caso o banco esteja vazio entra nesse banco
+                            if(strcmp(filaEspera[k], "_") == 0){
+                            filaEspera[k][0] = linhaMatriz[linha][coluna];
+                            filaEspera[k][1] = '\0';
+                            linhaMatriz[linha][coluna] = ' ';   //Caracter dentro da matriz vira um espaco
+                            break;
+                            }
+                        }
+                    }
+
+                }
             }
+
+            
 
         }
     }

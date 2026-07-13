@@ -4,7 +4,7 @@
 
 char nomeJogo[33] = "ONIBUS";  //variaveis globais de nickname e nome do jogo e pontuacao
 char nickname[33];
-int pontuacao;
+int pontuacao = 0;
 int cont = 0;   //contador de fases
 
 void mainJogo();
@@ -105,22 +105,43 @@ void carregarFase(){    //Funcao de carrega o dados da fase
 void proximaFase(){  //Funcao de proxima fase
     limparTela();
     
-    printf("**************************************");
-    printf("**  MUITO BEM VOCE FINALIZOU A FASE **");
-    printf("**                                  **");
-    printf("**   Ir para a proxima fase(S/N)    **");
-    printf("**************************************");
+    printf("**************************************\n");
+    printf("**  MUITO BEM VOCE FINALIZOU A FASE **\n");
+    printf("**                                  **\n");
+    printf("**   Ir para a proxima fase(S/N)    **\n");
+    printf("**************************************\n");
+
+    printf("\n");
 
     char opcao;
-    scanf("%c", &opcao);
+    scanf(" %c", &opcao);
 
     if(opcao == 'S' || opcao == 's'){
         mainJogo(); //Se = S continua 
     }else if(opcao == 'N'|| opcao == 'n'){  //Senao volta para o menu principal
-        menuPrincipal();    
+        return;   
     }
 
 }
+
+void perdeuFase(){  //funcao quando perde a fase    
+
+    printf("*************************************************\n");
+    printf("**  COM ESTE MOVIMENTO, LOTOU A FILA DE ESPERA **\n");
+    printf("**                PONTUACAO: %d                **\n", pontuacao);
+    printf("**                TECLE <ENTER>                **\n");
+    printf("*************************************************\n");
+
+    printf("\n");
+
+    pontuacao = 0;  //Zera a pontucao
+
+    getchar();
+    getchar();
+    menuPrincipal();    //Volto para o menu
+
+}
+
 
 void mainJogo(){    //Funcao principal do jogo
     limparTela(); 
@@ -142,6 +163,8 @@ void mainJogo(){    //Funcao principal do jogo
 
             printf("*** JOGO DO %s ***\n", nomeJogo);
             printf("\n");
+
+            printf("PONTUACAO: %d\n", pontuacao);
             
             printf("+----o--------o----+\n");
             printf("|    -    -    -   |-+\n");
@@ -156,6 +179,12 @@ void mainJogo(){    //Funcao principal do jogo
                     printf("%s\n", filaEspera[j]);
                 }else{
                     printf("%s ", filaEspera[j]);
+                }
+            }
+
+            for(int j = 0; j<5; j++){
+                if(strcmp(filaEspera[j], "_") == 0){
+                    filaVazia++;
                 }
             }
 
@@ -185,20 +214,22 @@ void mainJogo(){    //Funcao principal do jogo
                 printf("Posicao invalida tecle <enter> para voltar\n");
                 getchar();
                 getchar();
-            }
-
-            if(linhaMatriz[linha][coluna] == lista[cont].ordemOnibus[i]){   //Se o caracter for = ao onibus
+            }else{
+                if(linhaMatriz[linha][coluna] == lista[cont].ordemOnibus[i]){   //Se o caracter for = ao onibus
         
                 if(linha == 0){ //Se for o primeiro da fila
                     if(banco1 == ' '){  //Verifica qual banco esta livre e troca
                         banco1 = linhaMatriz[linha][coluna];
-                        linhaMatriz[linha][coluna] = ' ';
+                        linhaMatriz[linha][coluna] = ' ';   //Troca o caracter dentro da matriz por ' '
+                        pontuacao += 15;     //Imcremento a pontucao
                     }else if(banco2 == ' '){
                         banco2 = linhaMatriz[linha][coluna];
                         linhaMatriz[linha][coluna] = ' ';
+                        pontuacao += 15;
                     }else if(banco3 == ' '){
                         banco3 = linhaMatriz[linha][coluna];
                         linhaMatriz[linha][coluna] = ' ';
+                        pontuacao += 15;
                     }
                 }else{
                     if(linhaMatriz[linha - 1][coluna] != ' '){      //Se tiver algum caracter na frente retorna erro
@@ -208,13 +239,18 @@ void mainJogo(){    //Funcao principal do jogo
                     }else{  //Senao verifica qual banco esta livre e troca
                         if(banco1 == ' '){
                         banco1 = linhaMatriz[linha][coluna];
-                        linhaMatriz[linha][coluna] = ' ';
-                        }else if(banco2 == ' '){
+                        linhaMatriz[linha][coluna] = ' ';   //Troca o caracter dentro da matriz por ' ' 
+                        pontuacao += 15;
+                        }
+                        else if(banco2 == ' '){
                         banco2 = linhaMatriz[linha][coluna];
                         linhaMatriz[linha][coluna] = ' ';
-                        }else if(banco3 == ' '){
+                        pontuacao += 15;
+                        }
+                        else if(banco3 == ' '){
                         banco3 = linhaMatriz[linha][coluna];
                         linhaMatriz[linha][coluna] = ' ';
+                        pontuacao += 15;
                         }
                     }
                 }
@@ -222,7 +258,7 @@ void mainJogo(){    //Funcao principal do jogo
             }else{//Se o caracter nao for = onibus
 
                 if(linha == 0){ //Se estiver na primeira linha
-                    for(int k = 0; k<5; i++){   //Caso o banco esteja vazio entra nesse banco
+                    for(int k = 0; k<5; k++){   //Caso o banco esteja vazio entra nesse banco
                         if(strcmp(filaEspera[k], "_") == 0){
                             filaEspera[k][0] = linhaMatriz[linha][coluna];
                             filaEspera[k][1] = '\0';
@@ -248,9 +284,15 @@ void mainJogo(){    //Funcao principal do jogo
 
                 }
             }
+            }
 
-            
+            if(filaVazia == 0){ // Se fila vazia retorna 0 perdeu a fase
+                perdeuFase();
+                filaVazia = 0;
+            }
 
+            filaVazia = 0;
+        
         }
     }
 

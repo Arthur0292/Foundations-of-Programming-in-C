@@ -82,7 +82,7 @@ void telaInstrucoes(){
 void carregarFase(){    //Funcao de carrega o dados da fase
 
     char c;    
-    if(cont == 0){   //Abro o entrada.txt apenas uma vez
+    if(cont == 0){   //Abro o entrada.txt
         arq = fopen("entrada.txt", "r");
     }
 
@@ -104,6 +104,9 @@ void carregarFase(){    //Funcao de carrega o dados da fase
 
 void proximaFase(){  //Funcao de proxima fase
     limparTela();
+
+    printf("*** JOGO DO %s ***\n", nomeJogo);
+    printf("\n");
     
     printf("**************************************\n");
     printf("**  MUITO BEM VOCE FINALIZOU A FASE **\n");
@@ -124,6 +127,33 @@ void proximaFase(){  //Funcao de proxima fase
 
 }
 
+void venceu(){  //Funcao quando venceu
+    limparTela();
+
+    printf("*** JOGO DO %s ***\n", nomeJogo);
+    printf("\n");
+    
+    printf("**************************************\n");
+    printf("**      PARABENS VOCE VENCEU        **\n");
+    printf("**                                  **\n");
+    printf("**          PONTUACAO: %d          **\n", pontuacao);
+    printf("**************************************\n");
+
+    printf("\n");
+
+}
+
+void verificarTermino(){    //Funcao para verificar termino da fase
+
+    if(lista[cont].termino == 'F'){
+        proximaFase();  //Vou para a proxima fase
+    }else{
+        venceu();   //Tela de vitoria
+    }
+
+
+}
+
 void perdeuFase(){  //funcao quando perde a fase  
     
     printf("\n");
@@ -137,9 +167,12 @@ void perdeuFase(){  //funcao quando perde a fase
     printf("\n");
 
     pontuacao = 0;  //Zera a pontucao
+    cont = 0;
 
+    fclose(arq);    //Fecho o arquivo
     getchar();
     getchar();
+
     return;    //Volto para o menu
 
 }
@@ -154,6 +187,8 @@ void mainJogo(){    //Funcao principal do jogo
 
     for(int i = 0; i<lista[cont].quantOnibus; i++){
         limparTela();
+
+
         char banco1 = ' ';  //Caracteres do banco
         char banco2 = ' ';
         char banco3 = ' ';
@@ -163,10 +198,29 @@ void mainJogo(){    //Funcao principal do jogo
         while(banco1 == ' ' || banco2 == ' ' || banco3 == ' '){ //Enquanto os bancos estao vazios repete
             limparTela();
 
+            for(int j = 0; j<5; j++){   //Se algum caracter da fila de espera for = onibus troca para os bancos
+                if(filaEspera[j][0] == lista[cont].ordemOnibus[i]){
+                    if(banco1 == ' '){  
+                        banco1 = filaEspera[j][0];  //Banco = caracter  
+                        filaEspera[j][0] = '_';
+                        filaEspera[j][1] = '\0';
+                    }else if(banco2 == ' '){
+                        banco2 = filaEspera[j][0];
+                        filaEspera[j][0] = '_';
+                        filaEspera[j][1] = '\0';
+                    }else if(banco3 == ' '){
+                        banco3 = filaEspera[j][0];
+                        filaEspera[j][0] = '_';
+                        filaEspera[j][1] = '\0';
+                    }
+                }
+            }
+
             printf("*** JOGO DO %s ***\n", nomeJogo);
             printf("\n");
 
             printf("PONTUACAO: %d\n", pontuacao);
+
             
             printf("+----o--------o----+\n");
             printf("|    -    -    -   |-+\n");
@@ -176,7 +230,8 @@ void mainJogo(){    //Funcao principal do jogo
 
             printf("\n");
 
-            for(int j = 0; j<5; j++){   //Fila de espera
+
+            for(int j = 0; j<5; j++){   //Verifica se a fila de espera esta cheia
                 if(i == 4){
                     printf("%s\n", filaEspera[j]);
                 }else{
@@ -295,24 +350,6 @@ void mainJogo(){    //Funcao principal do jogo
 
             filaVazia = 0;
 
-            for(int j = 0; j<5; j++){   //Se algum caracter da fila de espera for = onibus troca para os bancos
-                if(filaEspera[j][0] == lista[cont].ordemOnibus[i]){
-                    if(banco1 == ' '){  
-                        banco1 = filaEspera[j][0];  //Banco = caracter  
-                        filaEspera[j][0] = '_';
-                        filaEspera[j][1] = '\0';
-                    }else if(banco2 == ' '){
-                        banco2 = filaEspera[j][0];
-                        filaEspera[j][0] = '_';
-                        filaEspera[j][1] = '\0';
-                    }else if(banco3 == ' '){
-                        banco3 = filaEspera[j][0];
-                        filaEspera[j][0] = '_';
-                        filaEspera[j][1] = '\0';
-                    }
-                }
-            }
-        
         }
     }
 

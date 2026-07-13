@@ -140,7 +140,7 @@ void perdeuFase(){  //funcao quando perde a fase
 
     getchar();
     getchar();
-    menuPrincipal();    //Volto para o menu
+    return;    //Volto para o menu
 
 }
 

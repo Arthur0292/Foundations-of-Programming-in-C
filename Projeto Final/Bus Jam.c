@@ -52,9 +52,10 @@ int menuPrincipal(){
     printf("\n");
 
     printf("1 - Jogar\n");
-    printf("2 - Instrucoes\n");
-    printf("3 - Raking\n");
-    printf("4 - Sair\n");
+    printf("2 - Configuracões\n");
+    printf("3 - Instrucoes\n");
+    printf("4 - Raking\n");
+    printf("5 - Sair\n");
     printf("\n");
 
     printf("Digite a opcao desejada: ");
@@ -127,7 +128,7 @@ void mainJogo(){    //Funcao principal do jogo
 
     char filaEspera[5][2] = {"_", "_", "_", "_", "_"}; //Fila de espera
 
-    
+
     for(int i = 0; i<lista[cont].quantOnibus; i++){
         limparTela();
         char banco1 = ' ';  //Caracteres do banco
@@ -257,6 +258,37 @@ void mainJogo(){    //Funcao principal do jogo
     proximaFase();   
 }
 
+
+void zerarRanking(){ //Funcao para zerar o raking
+
+}
+
+void configuracoes(){   //Mostrar as configuracoes
+    limparTela();
+
+    int opcao;
+
+    printf("*** JOGO DO %s ***\n", nomeJogo);
+    printf("\n");
+
+    printf("1 - Zerar ranking\n");
+    printf("2 - Voltar para o menu\n");
+    printf("\n");
+
+    printf("Digite a opcao: ");
+
+    scanf("%d", &opcao); 
+    if(opcao == 1){     //Caso 1 = zerar ranking
+        zerarRanking();
+    }else if(opcao == 2){   //Caso 2 = menu principal
+        menuPrincipal();
+    }else{  
+        printf("Opcao invalida tecle <enter>\n");
+        printf("Digite novamente: ");
+        scanf("%d", &opcao);
+    }
+}
+
 int main(){
 
     int opcao;
@@ -270,10 +302,13 @@ int main(){
         if(opcao == 1){
             mainJogo();
         }else if(opcao == 2){
+            configuracoes();
+        }
+        else if(opcao == 3){
             telaInstrucoes();   //Mostra a tela de Instrucoes
-        }else if(opcao == 3){
-                                //Mostra o Ranking
         }else if(opcao == 4){
+                                //Mostra o Ranking
+        }else if(opcao == 5){
             break;      //Caso a opcao =  4 sai do jogo
         }else{
             printf("Opcao Invalida!\n");  //Caso nenhuma das anteriores = opcao invalida

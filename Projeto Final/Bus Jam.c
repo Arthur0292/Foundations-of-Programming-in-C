@@ -124,11 +124,13 @@ void proximaFase(){  //Funcao de proxima fase
 
 }
 
-void perdeuFase(){  //funcao quando perde a fase    
+void perdeuFase(){  //funcao quando perde a fase  
+    
+    printf("\n");
 
     printf("*************************************************\n");
     printf("**  COM ESTE MOVIMENTO, LOTOU A FILA DE ESPERA **\n");
-    printf("**                PONTUACAO: %d                **\n", pontuacao);
+    printf("**                PONTUACAO: %d               **\n", pontuacao);
     printf("**                TECLE <ENTER>                **\n");
     printf("*************************************************\n");
 
@@ -286,12 +288,30 @@ void mainJogo(){    //Funcao principal do jogo
             }
             }
 
-            if(filaVazia == 0){ // Se fila vazia retorna 0 perdeu a fase
+            if(filaVazia == 1){ // Se fila vazia retorna 0 perdeu a fase
                 perdeuFase();
                 filaVazia = 0;
             }
 
             filaVazia = 0;
+
+            for(int j = 0; j<5; j++){   //Se algum caracter da fila de espera for = onibus troca para os bancos
+                if(filaEspera[j][0] == lista[cont].ordemOnibus[i]){
+                    if(banco1 == ' '){  
+                        banco1 = filaEspera[j][0];  //Banco = caracter  
+                        filaEspera[j][0] = '_';
+                        filaEspera[j][1] = '\0';
+                    }else if(banco2 == ' '){
+                        banco2 = filaEspera[j][0];
+                        filaEspera[j][0] = '_';
+                        filaEspera[j][1] = '\0';
+                    }else if(banco3 == ' '){
+                        banco3 = filaEspera[j][0];
+                        filaEspera[j][0] = '_';
+                        filaEspera[j][1] = '\0';
+                    }
+                }
+            }
         
         }
     }

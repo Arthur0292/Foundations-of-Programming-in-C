@@ -198,6 +198,8 @@ void mainJogo(){    //Funcao principal do jogo
         while(banco1 == ' ' || banco2 == ' ' || banco3 == ' '){ //Enquanto os bancos estao vazios repete
             limparTela();
 
+            int bloqueado = 0;
+
             for(int j = 0; j<5; j++){   //Se algum caracter da fila de espera for = onibus troca para os bancos
                 if(filaEspera[j][0] == lista[cont].ordemOnibus[i]){
                     if(banco1 == ' '){  
@@ -289,26 +291,47 @@ void mainJogo(){    //Funcao principal do jogo
                         pontuacao += 15;
                     }
                 }else{
-                    if(linhaMatriz[linha - 1][coluna] != ' '){      //Se tiver algum caracter na frente retorna erro
+                    if(linhaMatriz[linha - 1][coluna] != ' ' && linhaMatriz[linha][coluna - 1] != ' ' && linhaMatriz[linha][coluna + 1] != ' '){      //Se tiver algum caracter na frente e dos lados retorna erro
                         printf("Elemento bloqueado tecle <enter> para voltar");
                         getchar();
                         getchar();
-                    }else{  //Senao verifica qual banco esta livre e troca
-                        if(banco1 == ' '){
-                        banco1 = linhaMatriz[linha][coluna];
-                        linhaMatriz[linha][coluna] = ' ';   //Troca o caracter dentro da matriz por ' ' 
-                        pontuacao += 15;
+                    }else{  //Senao verifia aonde esta livre
+                        if(linhaMatriz[linha - 1][coluna] == ' ') { //Se for o de cima
+                            for(int k = linha - 1; k >= 0; k--){
+                                if(linhaMatriz[k][coluna] != ' '){  //Verifica se estao vazias todas linhas da frente
+                                    bloqueado++;
+                                }
+                            }
+                        }else if(linhaMatriz[linha][coluna + 1] == ' '){//Se for o da direita
+                                for(int k = linha - 1; k >= 0; k--){    //Verifica todas as linhas da coluna da direita
+                                if(linhaMatriz[k][coluna + 1] != ' '){
+                                    bloqueado++;
+                                }
+                            }
+                        }else if(linhaMatriz[linha][coluna - 1] == ' '){//Se for o da esquerda
+                            for(int k = linha - 1; k >= 0; k--){    //Verifica todas as linhas da coluna da esuquerda
+                                if(linhaMatriz[k][coluna - 1] != ' '){
+                                    bloqueado++;
+                                }
+                            }
                         }
-                        else if(banco2 == ' '){
-                        banco2 = linhaMatriz[linha][coluna];
-                        linhaMatriz[linha][coluna] = ' ';
-                        pontuacao += 15;
+
+                        if(bloqueado == 0){     //Se nao tiver nenhum caracter na passagem
+                            if(banco1 == ' '){  //Verifica qual banco esta livre e troca
+                                banco1 = linhaMatriz[linha][coluna];
+                                linhaMatriz[linha][coluna] = ' ';   //Troca o caracter dentro da matriz por ' '
+                                pontuacao += 15;     //Imcremento a pontucao
+                            }else if(banco2 == ' '){
+                                banco2 = linhaMatriz[linha][coluna];
+                                linhaMatriz[linha][coluna] = ' ';
+                                pontuacao += 15;
+                            }else if(banco3 == ' '){
+                                banco3 = linhaMatriz[linha][coluna];
+                                linhaMatriz[linha][coluna] = ' ';
+                                pontuacao += 15;
+                            }
                         }
-                        else if(banco3 == ' '){
-                        banco3 = linhaMatriz[linha][coluna];
-                        linhaMatriz[linha][coluna] = ' ';
-                        pontuacao += 15;
-                        }
+                        bloqueado = 0;
                     }
                 }
             
@@ -323,22 +346,45 @@ void mainJogo(){    //Funcao principal do jogo
                             break;
                         }
                     }
+
                 }else{
-                    if(linhaMatriz[linha - 1][coluna] != ' '){      //Se tiver algum caracter na frente retorna erro
+                    if(linhaMatriz[linha - 1][coluna] != ' ' && linhaMatriz[linha][coluna + 1] != ' ' && linhaMatriz[linha][coluna - 1] != ' '){      //Se tiver algum caracter na frente e dos lados retorna erro
                         printf("Elemento bloqueado tecle <enter> para voltar");
                         getchar();
                         getchar();
                     }else{
-                        for(int k = 0; k<5; k++){   //Caso o banco esteja vazio entra nesse banco
-                            if(strcmp(filaEspera[k], "_") == 0){
-                            filaEspera[k][0] = linhaMatriz[linha][coluna];
-                            filaEspera[k][1] = '\0';
-                            linhaMatriz[linha][coluna] = ' ';   //Caracter dentro da matriz vira um espaco
-                            break;
+                        if(linhaMatriz[linha - 1][coluna] == ' '){      //Se for o de cima
+                            for(int k = linha - 1; k >= 0; k--){    //Verifica todas as linhas da coluna da esuquerda
+                                if(linhaMatriz[k][coluna] != ' '){
+                                    bloqueado++;
+                                }
+                            }
+                        }else if(linhaMatriz[linha][coluna + 1] == ' '){  //Se for o da direita
+                            for(int k = linha - 1; k >= 0; k--){    //Verifica todas as linhas da coluna da esuquerda
+                                if(linhaMatriz[k][coluna + 1] != ' '){
+                                    bloqueado++;
+                                }
+                            }
+                        }else if(linhaMatriz[linha][coluna - 1]){
+                            for(int k = linha - 1; k >= 0; k--){    //Verifica todas as linhas da coluna da esuquerda
+                                if(linhaMatriz[k][coluna - 1] != ' '){
+                                    bloqueado++;
+                                }
                             }
                         }
                     }
 
+                    if(bloqueado == 0){
+                        for(int k = 0; k<5; k++){   //Caso o banco esteja vazio entra nesse banco
+                        if(strcmp(filaEspera[k], "_") == 0){
+                            filaEspera[k][0] = linhaMatriz[linha][coluna];
+                            filaEspera[k][1] = '\0';
+                            linhaMatriz[linha][coluna] = ' ';  //Caracter dentro da matriz vira um espaco
+                            break;
+                        }
+                    }
+                    }
+                    bloqueado = 0;
                 }
             }
             }

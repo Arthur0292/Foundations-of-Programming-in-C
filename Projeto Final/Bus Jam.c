@@ -102,8 +102,30 @@ void carregarFase(){    //Funcao de carrega o dados da fase
     
 }
 
+void venceu(){  //Funcao quando venceu
+    limparTela();
+
+    printf("*** JOGO DO %s ***\n", nomeJogo);
+    printf("\n");
+    
+    printf("**************************************\n");
+    printf("**      PARABENS VOCE VENCEU        **\n");
+    printf("**                                  **\n");
+    printf("**          PONTUACAO: %d          **\n", pontuacao);
+    printf("**************************************\n");
+
+    printf("\n");
+
+}
+
 void proximaFase(){  //Funcao de proxima fase
     limparTela();
+
+    pontuacao += 100;
+    
+    if(lista[cont].termino == 'U'){
+        venceu();
+    }
 
     printf("*** JOGO DO %s ***\n", nomeJogo);
     printf("\n");
@@ -127,21 +149,6 @@ void proximaFase(){  //Funcao de proxima fase
 
 }
 
-void venceu(){  //Funcao quando venceu
-    limparTela();
-
-    printf("*** JOGO DO %s ***\n", nomeJogo);
-    printf("\n");
-    
-    printf("**************************************\n");
-    printf("**      PARABENS VOCE VENCEU        **\n");
-    printf("**                                  **\n");
-    printf("**          PONTUACAO: %d          **\n", pontuacao);
-    printf("**************************************\n");
-
-    printf("\n");
-
-}
 
 void perdeuFase(){  //funcao quando perde a fase  
     
@@ -158,7 +165,6 @@ void perdeuFase(){  //funcao quando perde a fase
     pontuacao = 0;  //Zera a pontucao
     cont = 0;
 
-    fclose(arq);    //Fecho o arquivo
     getchar();
     getchar();
 
@@ -382,6 +388,10 @@ void mainJogo(){    //Funcao principal do jogo
             }
             }
 
+            if(banco1 != ' ' && banco1 != ' ' && banco3 != ' '){
+                pontuacao += 15;
+            }
+
             if(filaVazia == 1){ // Se fila vazia retorna 0 perdeu a fase
                 perdeuFase();
                 filaVazia = 0;
@@ -394,11 +404,7 @@ void mainJogo(){    //Funcao principal do jogo
 
     cont++; //Adiciono no contador de fase
 
-    if(lista[cont].termino == 'F'){
-        proximaFase();  //Vou para a proxima fase
-    }else{
-        venceu();   //Tela de vitoria
-    }
+    proximaFase();
     
 }
 

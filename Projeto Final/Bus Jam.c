@@ -2,13 +2,19 @@
 #include <string.h>
 #include <stdlib.h>
 
-char nomeJogo[33] = "ONIBUS";  //variaveis globais de nickname e nome do jogo e pontuacao
-char nickname[33];
-int pontuacao = 0;
+char nomeJogo[33] = "ONIBUS";  //Variavel global de nome do jogo
 int cont = 0;   //contador de fases
 int perdeu = 0;
+int qntRanking = 0;//Contador de pessoas do raking
 
 void mainJogo();
+
+typedef struct{     //Struct do nikname e pontuacao
+    char nickname[33];
+    int pontuacao;
+}ranking;
+
+ranking jogador[10000];
 
 typedef struct{     //Struct de dados de cada fase
     int quantOnibus;
@@ -39,7 +45,7 @@ void telaInicial(){
     printf("\n");
     printf("\n");
     printf("Informe seu Nickname: "); // ler o nickname
-    scanf("%32s", nickname);
+    scanf("%32s", jogador[qntRanking].nickname);
 }
 
 int menuPrincipal(){
@@ -49,7 +55,7 @@ int menuPrincipal(){
 
     printf("*** JOGO DO %s ***\n", nomeJogo);
     printf("\n");
-    printf("Bem vindo(a) %s\n", nickname);
+    printf("Bem vindo(a) %s\n", jogador[qntRanking].nickname);
     printf("\n");
 
     printf("1 - Jogar\n");
@@ -70,13 +76,45 @@ void telaInstrucoes(){
 
     printf("Instrucoes sobre o jogo do %s\n", nomeJogo);    //Mostra as intrucoes sobre o jogo
     printf("\n");
-    printf("aaaa\n");
+    printf("Objetivo do jogo encher cada onibus com seus reespectivos caracteres\n");
+    printf("\n");
+    printf("Como Jogar:\n");
+    printf("Informe a linha e a coluna do passageiro que deseja\n");
+    printf("Caracteres do mesmo onibus entra desde que não estejam bloqueado\n");
+    printf("Caracteres diferentes entram na fila de espera\n");
+    printf("\n");
+
+    printf("Regras:\n");
+    printf("Se a fila de espera encher a partida e encerrada e você perde\n");
+    printf("Cada ônibus aceita apenas um tipo de passageiro\n");
     printf("\n");
 
     printf("Tecle <enter> para prosseguir\n");
 
     getchar();  //Espera a tecla enter ser digitada 
     getchar();
+
+}
+
+void carregarRanking(){ //Funcao para carregar o ranking
+    FILE *rank = fopen("ranking.bin", "rb");
+    if(rank == NULL){   
+        return;
+    }
+
+
+
+
+
+
+}
+
+void salvarRanking(){   //funcao para salvar no raking
+    FILE *rank = fopen("ranking.bin", "ab");    //Abro ou crio arquivo de ranking
+
+    fwrite(&jogador[qntRanking], sizeof(jogador[qntRanking]), 1, rank); //Escrevo a pontuacao e o nickname
+
+    fclose(rank);
 
 }
 
@@ -112,10 +150,12 @@ void venceu(){  //Funcao quando venceu
     printf("**************************************\n");
     printf("**      PARABENS VOCE VENCEU        **\n");
     printf("**                                  **\n");
-    printf("**          PONTUACAO: %d          **\n", pontuacao);
+    printf("**          PONTUACAO: %d          **\n", jogador[qntRanking].pontuacao);
+    printf("**                                  **\n");
+    printf("**          TECLE <ENTER>           **\n");
     printf("**************************************\n");
 
-    pontuacao = 0;  //Zera a pontucao
+    jogador[qntRanking].pontuacao = 0;  //Zera a pontucao
     cont = 0;
     perdeu = 1;
 
@@ -124,12 +164,15 @@ void venceu(){  //Funcao quando venceu
 
     printf("\n");
 
+    getchar();
+    getchar();
+
 }
 
 void proximaFase(){  //Funcao de proxima fase
     limparTela();
 
-    pontuacao += 100;
+    jogador[qntRanking].pontuacao += 100;  
     
     if(lista[cont].termino == 'U'){
         venceu();
@@ -166,13 +209,13 @@ void perdeuFase(){  //funcao quando perde a fase
 
     printf("*************************************************\n");
     printf("**  COM ESTE MOVIMENTO, LOTOU A FILA DE ESPERA **\n");
-    printf("**                PONTUACAO: %d               **\n", pontuacao);
+    printf("**                PONTUACAO: %d               **\n", jogador[qntRanking].pontuacao);
     printf("**                TECLE <ENTER>                **\n");
     printf("*************************************************\n");
 
     printf("\n");
 
-    pontuacao = 0;  //Zera a pontucao
+    jogador[qntRanking].pontuacao = 0;  //Zera a pontucao
     cont = 0;
     perdeu = 1;
 
@@ -232,7 +275,7 @@ void mainJogo(){    //Funcao principal do jogo
             printf("*** JOGO DO %s ***\n", nomeJogo);
             printf("\n");
 
-            printf("PONTUACAO: %d\n", pontuacao);
+            printf("PONTUACAO: %d\n", jogador[qntRanking].pontuacao);
 
             
             printf("+----o--------o----+\n");
@@ -245,7 +288,7 @@ void mainJogo(){    //Funcao principal do jogo
 
 
             for(int j = 0; j<5; j++){   //Imprimi a fila de espera 
-                if(i == 4){
+                if(j == 4){
                     printf("%s\n", filaEspera[j]);
                 }else{
                     printf("%s ", filaEspera[j]);
@@ -399,7 +442,7 @@ void mainJogo(){    //Funcao principal do jogo
         }
 
             if(banco1 != ' ' && banco2 != ' ' && banco3 != ' '){
-                pontuacao += 15;
+                jogador[qntRanking].pontuacao += 15;
             }
 
 

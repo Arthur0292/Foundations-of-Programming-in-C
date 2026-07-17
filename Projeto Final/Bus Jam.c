@@ -6,6 +6,7 @@ char nomeJogo[33] = "ONIBUS";  //variaveis globais de nickname e nome do jogo e 
 char nickname[33];
 int pontuacao = 0;
 int cont = 0;   //contador de fases
+int perdeu = 0;
 
 void mainJogo();
 
@@ -82,7 +83,7 @@ void telaInstrucoes(){
 void carregarFase(){    //Funcao de carrega o dados da fase
 
     char c;    
-    if(cont == 0){   //Abro o entrada.txt
+    if(arq == NULL){   //Abro o entrada.txt
         arq = fopen("entrada.txt", "r");
     }
 
@@ -166,6 +167,10 @@ void perdeuFase(){  //funcao quando perde a fase
 
     pontuacao = 0;  //Zera a pontucao
     cont = 0;
+    perdeu = 1;
+
+    fclose(arq);    //fecho o arquivo
+    arq = fopen("entrada.txt", "r");
 
     getchar();
     getchar();
@@ -400,6 +405,11 @@ void mainJogo(){    //Funcao principal do jogo
             if(filaVazia == 0){ // Se fila vazia retorna 0 perdeu a fase
                 perdeuFase();
                 filaVazia = 0;
+            }
+
+            if(perdeu == 1){    //se perdeu interrope e volta para o menu
+                perdeu = 0;
+                return;
             }
 
             filaVazia = 0;

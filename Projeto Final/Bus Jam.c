@@ -115,6 +115,13 @@ void venceu(){  //Funcao quando venceu
     printf("**          PONTUACAO: %d          **\n", pontuacao);
     printf("**************************************\n");
 
+    pontuacao = 0;  //Zera a pontucao
+    cont = 0;
+    perdeu = 1;
+
+    fclose(arq);    //fecho o arquivo
+    arq = fopen("entrada.txt", "r");
+
     printf("\n");
 
 }

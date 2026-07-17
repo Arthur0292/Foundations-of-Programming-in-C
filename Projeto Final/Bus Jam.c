@@ -301,19 +301,24 @@ void mainJogo(){    //Funcao principal do jogo
                         getchar();
                         getchar();
                     }else{  //Senao verifia aonde esta livre
+                        
                         if(linhaMatriz[linha - 1][coluna] == ' ') { //Se for o de cima
                             for(int k = linha - 1; k >= 0; k--){
                                 if(linhaMatriz[k][coluna] != ' '){  //Verifica se estao vazias todas linhas da frente
                                     bloqueado++;
                                 }
                             }
-                        }else if(linhaMatriz[linha][coluna + 1] == ' '){//Se for o da direita
+                        }
+
+                        if(linhaMatriz[linha][coluna + 1] == ' '){//Se for o da direita
                                 for(int k = linha - 1; k >= 0; k--){    //coluna da direita
                                 if(linhaMatriz[k][coluna + 1] != ' '){
                                     bloqueado++;
                                 }
                             }
-                        }else if(linhaMatriz[linha][coluna - 1] == ' '){//Se for o da esquerda
+                        }
+
+                        if(linhaMatriz[linha][coluna - 1] == ' '){//Se for o da esquerda
                             for(int k = linha - 1; k >= 0; k--){    //coluna da esuquerda
                                 if(linhaMatriz[k][coluna - 1] != ' '){
                                     bloqueado++;
@@ -360,19 +365,23 @@ void mainJogo(){    //Funcao principal do jogo
                         getchar();
                         getchar();
                     }else{
+                        
                         if(linhaMatriz[linha - 1][coluna] == ' '){      //Se for o de cima
                             for(int k = linha - 1; k >= 0; k--){    //Verifica todas as linhas de cima
                                 if(linhaMatriz[k][coluna] != ' '){
                                     bloqueado++;
                                 }
                             }
-                        }else if(linhaMatriz[linha][coluna + 1] == ' '){  //Se for o da direita
-                            for(int k = linha; k >= 0; k--){    //coluna da esuquerda
+                        }
+
+                        if(linhaMatriz[linha][coluna + 1] == ' '){  //Se for o da direita
+                            for(int k = linha; k >= 0; k--){    //coluna da direita
                                 if(linhaMatriz[k][coluna + 1] != ' '){
                                     bloqueado++;
                                 }
                             }
-                        }else if(linhaMatriz[linha][coluna - 1]){
+                        }
+                        if(linhaMatriz[linha][coluna - 1] == 0){    //Se for o da esquerda
                             for(int k = linha - 1; k >= 0; k--){    //coluna da esuquerda
                                 if(linhaMatriz[k][coluna - 1] != ' '){
                                     bloqueado++;

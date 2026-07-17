@@ -3,11 +3,16 @@
 #include <stdlib.h>
 
 char nomeJogo[33] = "ONIBUS";  //variaveis globais de nickname e nome do jogo e pontuacao
-char nickname[33];
-int pontuacao = 0;
 int cont = 0;   //contador de fases
 
 void mainJogo();
+
+typedef struct{ //Struct de dados do jogador
+    char nickname[33];
+    int pontuacao;
+}player;
+
+player jogador;
 
 typedef struct{     //Struct de dados de cada fase
     int quantOnibus;
@@ -38,7 +43,7 @@ void telaInicial(){
     printf("\n");
     printf("\n");
     printf("Informe seu Nickname: "); // ler o nickname
-    scanf("%32s", nickname);
+    scanf("%32s", jogador.nickname);
 }
 
 int menuPrincipal(){
@@ -48,7 +53,7 @@ int menuPrincipal(){
 
     printf("*** JOGO DO %s ***\n", nomeJogo);
     printf("\n");
-    printf("Bem vindo(a) %s\n", nickname);
+    printf("Bem vindo(a) %s\n", jogador.nickname);
     printf("\n");
 
     printf("1 - Jogar\n");
@@ -111,7 +116,7 @@ void venceu(){  //Funcao quando venceu
     printf("**************************************\n");
     printf("**      PARABENS VOCE VENCEU        **\n");
     printf("**                                  **\n");
-    printf("**          PONTUACAO: %d          **\n", pontuacao);
+    printf("**          PONTUACAO: %d          **\n", jogador.pontuacao);
     printf("**************************************\n");
 
     printf("\n");
@@ -121,7 +126,7 @@ void venceu(){  //Funcao quando venceu
 void proximaFase(){  //Funcao de proxima fase
     limparTela();
 
-    pontuacao += 100;
+    jogador.pontuacao += 100;
     
     if(lista[cont].termino == 'U'){
         venceu();
@@ -158,13 +163,13 @@ void perdeuFase(){  //funcao quando perde a fase
 
     printf("*************************************************\n");
     printf("**  COM ESTE MOVIMENTO, LOTOU A FILA DE ESPERA **\n");
-    printf("**                PONTUACAO: %d               **\n", pontuacao);
+    printf("**                PONTUACAO: %d               **\n", jogador.pontuacao);
     printf("**                TECLE <ENTER>                **\n");
     printf("*************************************************\n");
 
     printf("\n");
 
-    pontuacao = 0;  //Zera a pontucao
+    jogador.pontuacao = 0;  //Zera a pontucao
     cont = 0;
 
     getchar();
@@ -222,7 +227,7 @@ void mainJogo(){    //Funcao principal do jogo
             printf("*** JOGO DO %s ***\n", nomeJogo);
             printf("\n");
 
-            printf("PONTUACAO: %d\n", pontuacao);
+            printf("PONTUACAO: %d\n", jogador.pontuacao);
 
             
             printf("+----o--------o----+\n");
@@ -300,50 +305,17 @@ void mainJogo(){    //Funcao principal do jogo
                         printf("Elemento bloqueado tecle <enter> para voltar");
                         getchar();
                         getchar();
-                    }else{  //Senao verifia aonde esta livre
-                        
-                        if(linhaMatriz[linha - 1][coluna] == ' ') { //Se for o de cima
-                            for(int k = linha - 1; k >= 0; k--){
-                                if(linhaMatriz[k][coluna] != ' '){  //Verifica se estao vazias todas linhas da frente
-                                    bloqueado++;
-                                }
-                            }
+                    }else{  //Senao estiver bloqueado
+                        if(banco1 == ' '){  //Verifica qual banco esta livre e troca
+                        banco1 = linhaMatriz[linha][coluna];
+                        linhaMatriz[linha][coluna] = ' ';   //Troca o caracter dentro da matriz por ' '
+                        }else if(banco2 == ' '){
+                        banco2 = linhaMatriz[linha][coluna];
+                        linhaMatriz[linha][coluna] = ' ';
+                        }else if(banco3 == ' '){
+                        banco3 = linhaMatriz[linha][coluna];
+                        linhaMatriz[linha][coluna] = ' ';
                         }
-
-                        if(linhaMatriz[linha][coluna + 1] == ' '){//Se for o da direita
-                                for(int k = linha - 1; k >= 0; k--){    //coluna da direita
-                                if(linhaMatriz[k][coluna + 1] != ' '){
-                                    bloqueado++;
-                                }
-                            }
-                        }
-
-                        if(linhaMatriz[linha][coluna - 1] == ' '){//Se for o da esquerda
-                            for(int k = linha - 1; k >= 0; k--){    //coluna da esuquerda
-                                if(linhaMatriz[k][coluna - 1] != ' '){
-                                    bloqueado++;
-                                }
-                            }
-                        }
-
-                        if(bloqueado == 0){     //Se nao tiver nenhum caracter bloqueando
-                            if(banco1 == ' '){  //Verifica qual banco esta livre e troca
-                                banco1 = linhaMatriz[linha][coluna];
-                                linhaMatriz[linha][coluna] = ' ';   //Troca o caracter dentro da matriz por ' '
-                            }else if(banco2 == ' '){
-                                banco2 = linhaMatriz[linha][coluna];
-                                linhaMatriz[linha][coluna] = ' ';
-                            }else if(banco3 == ' '){
-                                banco3 = linhaMatriz[linha][coluna];
-                                linhaMatriz[linha][coluna] = ' ';
-                            }
-                        }else{
-                            printf("Elemento bloqueado tecle <enter> para voltar");
-                            getchar();
-                            getchar();
-                        }
-
-                        bloqueado = 0;
                     }
                 }
             
@@ -364,33 +336,7 @@ void mainJogo(){    //Funcao principal do jogo
                         printf("Elemento bloqueado tecle <enter> para voltar");
                         getchar();
                         getchar();
-                    }else{
-                        
-                        if(linhaMatriz[linha - 1][coluna] == ' '){      //Se for o de cima
-                            for(int k = linha - 1; k >= 0; k--){    //Verifica todas as linhas de cima
-                                if(linhaMatriz[k][coluna] != ' '){
-                                    bloqueado++;
-                                }
-                            }
-                        }
-
-                        if(linhaMatriz[linha][coluna + 1] == ' '){  //Se for o da direita
-                            for(int k = linha; k >= 0; k--){    //coluna da direita
-                                if(linhaMatriz[k][coluna + 1] != ' '){
-                                    bloqueado++;
-                                }
-                            }
-                        }
-                        if(linhaMatriz[linha][coluna - 1] == 0){    //Se for o da esquerda
-                            for(int k = linha - 1; k >= 0; k--){    //coluna da esuquerda
-                                if(linhaMatriz[k][coluna - 1] != ' '){
-                                    bloqueado++;
-                                }
-                            }
-                        }
-                    }
-
-                    if(bloqueado == 0){
+                    }else{  //Se algum canto estiver vazio
                         for(int k = 0; k<5; k++){   //Caso o banco esteja vazio entra nesse banco
                             if(strcmp(filaEspera[k], "_") == 0){
                                 filaEspera[k][0] = linhaMatriz[linha][coluna];
@@ -398,20 +344,14 @@ void mainJogo(){    //Funcao principal do jogo
                                 linhaMatriz[linha][coluna] = ' ';  //Caracter dentro da matriz vira um espaco
                                 break;
                             }
-                        }
-                    }else{  
-                        printf("Elemento bloqueado tecle <enter> para voltar");
-                        getchar();
-                        getchar();
+                        }  
+                       
                     }
-                
-                    bloqueado = 0;
                 }
-            }
             }
 
             if(banco1 != ' ' && banco2 != ' ' && banco3 != ' '){
-                pontuacao += 15;
+                jogador.pontuacao += 15;
             }
 
             if(filaVazia == 1){ // Se fila vazia retorna 0 perdeu a fase

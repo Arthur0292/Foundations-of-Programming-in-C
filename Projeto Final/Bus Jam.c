@@ -20,7 +20,7 @@ typedef struct{     //Struct de dados de cada fase
 
 FILE *arq; //Variavel global para o entrada.txt
 fase lista[1000];   //Variaveis globais de fase
-char linhaMatriz[100][100];
+char linhaMatriz[1000][1000];
 char lixo[100];
 
 void limparTela() { //Funcao para limpar a tela
@@ -125,6 +125,7 @@ void proximaFase(){  //Funcao de proxima fase
     
     if(lista[cont].termino == 'U'){
         venceu();
+        return;
     }
 
     printf("*** JOGO DO %s ***\n", nomeJogo);
@@ -142,6 +143,7 @@ void proximaFase(){  //Funcao de proxima fase
     scanf(" %c", &opcao);
 
     if(opcao == 'S' || opcao == 's'){
+        cont++; //Adiciono no contador de fase
         mainJogo(); //Se = S continua 
     }else if(opcao == 'N'|| opcao == 'n'){  //Senao volta para o menu principal
         return;   
@@ -213,6 +215,10 @@ void mainJogo(){    //Funcao principal do jogo
                 }
             }
 
+            if(banco1 != ' ' && banco2 != ' ' && banco3 != ' '){//Caso todos os bancos tenham sido completos
+                break;
+            }
+
             printf("*** JOGO DO %s ***\n", nomeJogo);
             printf("\n");
 
@@ -246,15 +252,20 @@ void mainJogo(){    //Funcao principal do jogo
             printf("\n");
 
 
-
-            int aux = 0;    //Numero das linhas
+            int aux = 1;    //Numero das linhas
             for(int j = 0; j<lista[cont].quantLinhas; j++){ //Imprimi a Matriz
                 printf("%d %s\n", aux, linhaMatriz[j]);
                 aux++;
             }
             
-            printf("   %s\n", lixo);    //Numero das colunas
-        
+            for(int i = 1; i<=10; i++){ //Imprimir o Numero das colunas
+                if(i == 1){
+                    printf("  %d", i);
+                }else{
+                    printf("%d", i);
+                }
+            }
+            printf("\n");
             printf("\n");
 
     
@@ -263,8 +274,10 @@ void mainJogo(){    //Funcao principal do jogo
             int linha, coluna; 
 
             scanf("%d %d", &linha, &coluna);    //leio a linha e coluna da matriz
+            linha--;
+            coluna--;
 
-            if(linhaMatriz[linha][coluna] == '_' || linhaMatriz[linha][coluna] == ' '){   //Caso seja uma parede ou fora da matriz imprimi erro
+            if(linhaMatriz[linha][coluna] == '_' || linhaMatriz[linha][coluna] == ' ' || coluna > 10 || coluna < 0 || linha >= lista[cont].quantLinhas || linha < 0){   //Caso seja uma parede ou fora da matriz imprimi erro
                 printf("Posicao invalida tecle <enter> para voltar\n");
                 getchar();
                 getchar();
@@ -388,7 +401,7 @@ void mainJogo(){    //Funcao principal do jogo
             }
             }
 
-            if(banco1 != ' ' && banco1 != ' ' && banco3 != ' '){
+            if(banco1 != ' ' && banco2 != ' ' && banco3 != ' '){
                 pontuacao += 15;
             }
 
@@ -400,9 +413,8 @@ void mainJogo(){    //Funcao principal do jogo
             filaVazia = 0;
 
         }
-    }
 
-    cont++; //Adiciono no contador de fase
+    }
 
     proximaFase();
     

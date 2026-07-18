@@ -10,6 +10,7 @@ int cont = 0;   //contador de fases
 int perdeu = 0;
 int qntRanking = 0;//Contador de pessoas do raking
 
+//Variaveis de dificuldade 
 int tamanhoFila = 5; //quant bancos na fila de espera
 char arquivoAtual[1000] = "entrada.txt";    //Arquivo atual
 

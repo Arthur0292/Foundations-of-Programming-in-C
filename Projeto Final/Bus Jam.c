@@ -99,23 +99,97 @@ void telaInstrucoes(){
 void carregarRanking(){ //Funcao para carregar o ranking
     FILE *rank = fopen("ranking.bin", "rb");
     if(rank == NULL){   
-        return;
+        return; //arquivo ainda nao existe qntRanking continua 0
     }
 
+    qntRanking = 0;
 
+    while(fread(&jogador[qntRanking], sizeof(jogador[qntRanking]), 1, rank) == 1){  //Leio e salvo nos dados da struct
+        qntRanking++;
+    }
 
-
-
-
+    fclose(rank);
 }
 
-void salvarRanking(){   //funcao para salvar no raking
-    FILE *rank = fopen("ranking.bin", "ab");    //Abro ou crio arquivo de ranking
+void salvarRankingCompleto(){   //funcao para escrever todas as info no ranking
+    FILE *rank = fopen("ranking.bin", "wb");    //Abro arquivo de ranking para escrita
 
-    fwrite(&jogador[qntRanking], sizeof(jogador[qntRanking]), 1, rank); //Escrevo a pontuacao e o nickname
+    if(rank == NULL){
+        rank = fopen("ranking.bin", "wb"); 
+    }
+
+    for(int i = 0; i<qntRanking; i++){
+        fwrite(&jogador[i], sizeof(jogador[i]), 1, rank);   //Escrevo a struct com nome e pontucao 
+    }
 
     fclose(rank);
 
+}
+
+void atualizarRank(){ //Funcao para atualizar as info no ranking
+
+    int existe = 0;    //Comparar se ja existe no ranking
+    for(int i = 0; i<qntRanking; i++){
+        if(strcmp(jogador[i].nickname, jogador[qntRanking].nickname) == 0){     //Se sim verifica a pontucao e troca se for menor
+            existe++;
+            if(jogador[i].pontuacao <= jogador[qntRanking].pontuacao){
+                jogador[i].pontuacao = jogador[qntRanking].pontuacao;
+            }
+        }
+    }
+
+    if(existe == 0){
+        qntRanking++;
+    }
+
+    salvarRankingCompleto();    //Salvo no rank todas as info atualizadas
+}
+
+void zerarRanking(){ //Funcao para zerar o raking
+    
+    FILE *rank = fopen("ranking.bin", "wb"); // "wb" apaga o conteudo
+    if(rank != NULL){
+        fclose(rank);
+    }
+    qntRanking = 0; // zera tambem o contador
+    printf("Ranking zerado\n");
+    printf("\n");
+    printf("Tecle <enter> para voltar\n");
+    getchar();
+    getchar();
+
+}
+
+void mostrarRanking(){  //Funcao para mostrar o ranking
+    limparTela();
+
+    printf("****************************\n");
+    printf("**                        **\n");
+    printf("**         RANKING        **\n");
+    printf("**                        **\n");
+    printf("****************************\n");
+
+    for(int i = 0; i<qntRanking; i++){      //Orderno a pontucao
+        for(int j = 0; j < qntRanking - i - 1; j++){
+            if(jogador[j].pontuacao < jogador[j + 1].pontuacao){
+                ranking temp = jogador[j];
+                jogador[j] = jogador[j + 1];
+                jogador[j + 1] = temp;
+            }
+        }
+    }
+
+    printf("\n");
+    printf("\n");
+    for(int i = 0; i<qntRanking; i++){      //Imprimir o nickname e pontuacao
+        printf("NICKNAME: %s  PONTUAÇAO: %d\n", jogador[i].nickname, jogador[i].pontuacao);
+    }
+
+    printf("\n");
+
+    printf("Tecle <ENTER> para voltar\n");
+    getchar();
+    getchar();
 }
 
 void carregarFase(){    //Funcao de carrega o dados da fase
@@ -155,6 +229,8 @@ void venceu(){  //Funcao quando venceu
     printf("**          TECLE <ENTER>           **\n");
     printf("**************************************\n");
 
+    atualizarRank();    //Atualizo o ranking
+
     jogador[qntRanking].pontuacao = 0;  //Zera a pontucao
     cont = 0;
     perdeu = 1;
@@ -164,7 +240,7 @@ void venceu(){  //Funcao quando venceu
 
     printf("\n");
 
-    getchar();
+    getchar(); 
     getchar();
 
 }
@@ -214,6 +290,8 @@ void perdeuFase(){  //funcao quando perde a fase
     printf("*************************************************\n");
 
     printf("\n");
+
+    atualizarRank();    //Atualizo o ranking
 
     jogador[qntRanking].pontuacao = 0;  //Zera a pontucao
     cont = 0;
@@ -325,7 +403,12 @@ void mainJogo(){    //Funcao principal do jogo
             coluna--;
 
             if(linhaMatriz[linha][coluna] == '_' || linhaMatriz[linha][coluna] == ' ' || coluna > 10 || coluna < 0 || linha >= lista[cont].quantLinhas || linha < 0){   //Caso seja uma parede ou fora da matriz imprimi erro
-                printf("Posicao invalida tecle <enter> para voltar\n");
+                if(linhaMatriz[linha][coluna] = ' '){
+                    printf("O Caracter ja foi movido tecle <enter> para voltar");
+                    
+                }else{
+                    printf("Posicao invalida tecle <enter> para voltar\n");
+                }
                 getchar();
                 getchar();
             }else{
@@ -472,15 +555,12 @@ void mainJogo(){    //Funcao principal do jogo
     
 }
 
-
-void zerarRanking(){ //Funcao para zerar o raking
-
-}
-
 void configuracoes(){   //Mostrar as configuracoes
     limparTela();
 
     int opcao;
+
+    carregarRanking();//chamo a funcao para carregar o ranking
 
     printf("*** JOGO DO %s ***\n", nomeJogo);
     printf("\n");
@@ -506,6 +586,7 @@ void configuracoes(){   //Mostrar as configuracoes
 int main(){
 
     int opcao;
+    carregarRanking();  //Carrego o ranking
 
     telaInicial();  //Chamo a tela inicial
     
@@ -521,7 +602,7 @@ int main(){
         else if(opcao == 3){
             telaInstrucoes();   //Mostra a tela de Instrucoes
         }else if(opcao == 4){
-                                //Mostra o Ranking
+            mostrarRanking();                   //Mostra o Ranking
         }else if(opcao == 5){
             break;      //Caso a opcao =  4 sai do jogo
         }else{

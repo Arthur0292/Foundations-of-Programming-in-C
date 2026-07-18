@@ -403,7 +403,7 @@ void mainJogo(){    //Funcao principal do jogo
             coluna--;
 
             if(linhaMatriz[linha][coluna] == '_' || linhaMatriz[linha][coluna] == ' ' || coluna > 10 || coluna < 0 || linha >= lista[cont].quantLinhas || linha < 0){   //Caso seja uma parede ou fora da matriz imprimi erro
-                if(linhaMatriz[linha][coluna] = ' '){
+                if(linhaMatriz[linha][coluna] == ' '){
                     printf("O Caracter ja foi movido tecle <enter> para voltar");
                     
                 }else{

@@ -3,11 +3,15 @@
 #include <stdlib.h>
 
 //MATRICULA: 261027267
-//Arthur Vitor
+//Arthur Vitor Da Silva Nepomuceno
+
 char nomeJogo[33] = "ONIBUS";  //Variavel global de nome do jogo
 int cont = 0;   //contador de fases
 int perdeu = 0;
 int qntRanking = 0;//Contador de pessoas do raking
+
+int tamanhoFila = 5; //quant bancos na fila de espera
+char arquivoAtual[1000] = "entrada.txt";    //Arquivo atual
 
 void mainJogo();
 
@@ -221,7 +225,7 @@ void carregarFase(){    //Funcao de carrega o dados da fase
 
     char c;    
     if(arq == NULL){   //Abro o entrada.txt
-        arq = fopen("entrada.txt", "r");
+        arq = fopen(arquivoAtual, "r");
     }
 
     fscanf(arq, "%d", &lista[cont].quantOnibus);  //Quantidade de onibus
@@ -260,7 +264,7 @@ void venceu(){  //Funcao quando venceu
     cont = 0;
 
     fclose(arq);    //fecho o arquivo
-    arq = fopen("entrada.txt", "r");
+    arq = fopen(arquivoAtual, "r");
 
     printf("\n");
 
@@ -304,7 +308,7 @@ void proximaFase(){  //Funcao de proxima fase
         cont = 0;
 
         fclose(arq);    //fecho o arquivo
-        arq = fopen("entrada.txt", "r");
+        arq = fopen(arquivoAtual, "r");
 
         return;    //Volto para o menu   
     }
@@ -331,12 +335,84 @@ void perdeuFase(){  //funcao quando perde a fase
     perdeu = 1;
 
     fclose(arq);    //fecho o arquivo
-    arq = fopen("entrada.txt", "r");
+    arq = fopen(arquivoAtual, "r");
 
     getchar();
     getchar();
 
     return;    //Volto para o menu
+
+}
+
+void setarDificuldade(){ //Funcao de setar a dificuldade
+    limparTela();
+
+    printf("*** JOGO DO %s ***\n", nomeJogo);
+    printf("\n");
+
+    int opcao;
+    
+    printf("1 - DIMINUIR TAMANHO DA FILA DE ESPERA\n");
+    printf("2 - ESCOLHER DIFICULDADE DA FASE\n");
+
+    scanf("%d", &opcao);
+
+    if(opcao == 1){ //Diminuir fila de espera
+        limparTela();
+
+        int escolha;
+
+        printf("DIMINUIR FILA DE ESPERA\n");
+        printf("\n");
+        printf("1 - Medio\n");
+        printf("2 - Dificil\n");
+        printf("3 - Hardcore\n");
+        printf("4 - IMPOSSIVEL!!!");
+        printf("\n");
+
+        scanf("%d", &escolha);
+
+        if(escolha == 1){   
+            tamanhoFila = 4;
+        }else if(escolha == 2){
+            tamanhoFila = 3;
+        }else if(escolha == 3){
+            tamanhoFila = 2;
+        }else if(escolha == 4){
+            tamanhoFila = 1;
+        }else{
+            printf("Numero Invalido\n");
+            getchar();
+            getchar();
+            setarDificuldade();
+        }
+    }else if(opcao == 2){   //Escolher dificuldade da fase
+        limparTela();
+
+        int escolha;
+        printf("ESCOLHER FASE\n");
+        printf("1 - Facil\n");
+        printf("2 - Media\n");
+        printf("3 - Dificil\n");
+        scanf("%d", &escolha);
+        
+        if(escolha == 1){
+            strcpy(arquivoAtual, "entrada.txt");
+        }else if(escolha == 2){
+            strcpy(arquivoAtual, "medias.txt");
+        }else if(escolha == 3){
+            strcpy(arquivoAtual, "dificeis.txt");
+        }
+
+        if(arq != NULL){    //fecho o arquivo anterior
+        fclose(arq);
+        arq = NULL;
+        }
+
+        cont = 0;
+        
+    }
+
 
 }
 
@@ -361,7 +437,7 @@ void mainJogo(){    //Funcao principal do jogo
         while(banco1 == ' ' || banco2 == ' ' || banco3 == ' '){ //Enquanto os bancos estao vazios repete
             limparTela();
 
-            for(int j = 0; j<5; j++){   //Se algum caracter da fila de espera for = onibus troca para os bancos
+            for(int j = 0; j<tamanhoFila; j++){   //Se algum caracter da fila de espera for = onibus troca para os bancos
                 if(filaEspera[j][0] == lista[cont].ordemOnibus[i]){
                     if(banco1 == ' '){  
                         banco1 = filaEspera[j][0];  //Banco = caracter  
@@ -398,8 +474,8 @@ void mainJogo(){    //Funcao principal do jogo
             printf("\n");
 
 
-            for(int j = 0; j<5; j++){   //Imprimi a fila de espera 
-                if(j == 4){
+            for(int j = 0; j<tamanhoFila; j++){   //Imprimi a fila de espera 
+                if(j == tamanhoFila - 1){
                     printf("%s\n", filaEspera[j]);
                 }else{
                     printf("%s ", filaEspera[j]);
@@ -517,7 +593,7 @@ void mainJogo(){    //Funcao principal do jogo
             }else{//Se o caracter nao for = onibus
 
                 if(linha == 0){ //Se estiver na primeira linha
-                    for(int k = 0; k<5; k++){   //Caso o banco esteja vazio entra nesse banco
+                    for(int k = 0; k<tamanhoFila; k++){   //Caso o banco esteja vazio entra nesse banco
                         if(strcmp(filaEspera[k], "_") == 0){
                             filaEspera[k][0] = linhaMatriz[linha][coluna];
                             filaEspera[k][1] = '\0';
@@ -534,7 +610,7 @@ void mainJogo(){    //Funcao principal do jogo
                     }else{
                         
                         if(linhaMatriz[linha - 1][coluna] == ' '){      //Se for o de cima
-                            for(int k = 0; k<5; k++){   //Caso o banco esteja vazio entra nesse banco
+                            for(int k = 0; k<tamanhoFila; k++){   //Caso o banco esteja vazio entra nesse banco
                                 if(strcmp(filaEspera[k], "_") == 0){
                                     filaEspera[k][0] = linhaMatriz[linha][coluna];
                                     filaEspera[k][1] = '\0';
@@ -543,7 +619,7 @@ void mainJogo(){    //Funcao principal do jogo
                                 }
                             }
                         }else if(linhaMatriz[linha][coluna + 1] == ' '){  //Se for o da direita
-                            for(int k = 0; k<5; k++){   //Caso o banco esteja vazio entra nesse banco
+                            for(int k = 0; k<tamanhoFila; k++){   //Caso o banco esteja vazio entra nesse banco
                                 if(strcmp(filaEspera[k], "_") == 0){
                                     filaEspera[k][0] = linhaMatriz[linha][coluna];
                                     filaEspera[k][1] = '\0';
@@ -552,7 +628,7 @@ void mainJogo(){    //Funcao principal do jogo
                                 }
                             }
                         }else if(linhaMatriz[linha][coluna - 1] == ' '){    //Se for o da esquerda
-                            for(int k = 0; k<5; k++){   //Caso o banco esteja vazio entra nesse banco
+                            for(int k = 0; k<tamanhoFila; k++){   //Caso o banco esteja vazio entra nesse banco
                                 if(strcmp(filaEspera[k], "_") == 0){
                                     filaEspera[k][0] = linhaMatriz[linha][coluna];
                                     filaEspera[k][1] = '\0';
@@ -561,7 +637,7 @@ void mainJogo(){    //Funcao principal do jogo
                                 }
                             }  
                         }else if(linhaMatriz[linha + 1][coluna] == ' '){    //Se for o de baixo
-                            for(int k = 0; k<5; k++){   //Caso o banco esteja vazio entra nesse banco
+                            for(int k = 0; k<tamanhoFila; k++){   //Caso o banco esteja vazio entra nesse banco
                                 if(strcmp(filaEspera[k], "_") == 0){
                                     filaEspera[k][0] = linhaMatriz[linha][coluna];
                                     filaEspera[k][1] = '\0';
@@ -582,7 +658,7 @@ void mainJogo(){    //Funcao principal do jogo
             }
 
 
-            for(int j = 0; j<5; j++){   //conta quantos bancos vazios na fila de espera
+            for(int j = 0; j<tamanhoFila; j++){   //conta quantos bancos vazios na fila de espera
                 if(strcmp(filaEspera[j], "_") == 0){
                     filaVazia++;
                 }
@@ -619,7 +695,8 @@ void configuracoes(){   //Mostrar as configuracoes
     printf("\n");
 
     printf("1 - Zerar ranking\n");
-    printf("2 - Voltar para o menu\n");
+    printf("2 - Modo Dificuldade\n");
+    printf("3 - Voltar para o menu\n");
     printf("\n");
 
     printf("Digite a opcao: ");
@@ -628,6 +705,8 @@ void configuracoes(){   //Mostrar as configuracoes
     if(opcao == 1){     //Caso 1 = zerar ranking
         confirmarReniciar();
     }else if(opcao == 2){   //Caso 2 = menu principal
+        setarDificuldade();
+    }else if(opcao == 3){
         menuPrincipal();
     }else{  
         printf("Opcao invalida tecle <enter>\n");

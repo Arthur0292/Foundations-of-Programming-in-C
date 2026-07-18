@@ -304,9 +304,6 @@ void proximaFase(){  //Funcao de proxima fase
         fclose(arq);    //fecho o arquivo
         arq = fopen("entrada.txt", "r");
 
-        getchar();
-        getchar();
-
         return;    //Volto para o menu   
     }
 

@@ -152,6 +152,7 @@ void zerarRanking(){ //Funcao para zerar o raking
         fclose(rank);
     }
     qntRanking = 0; // zera tambem o contador
+    printf("\n");
     printf("Ranking zerado\n");
     printf("\n");
     printf("Tecle <enter> para voltar\n");
@@ -160,8 +161,30 @@ void zerarRanking(){ //Funcao para zerar o raking
 
 }
 
-void mostrarRanking(){  //Funcao para mostrar o ranking
+void confirmarReniciar(){   //funcao para confirmar o reiniciar rank
     limparTela();
+
+    char reiniciar;
+
+    printf("*** JOGO DO %s ***\n", nomeJogo);
+    printf("\n");
+
+    printf("Confirmar reinicializar o ranking? (S/N)\n");
+    scanf(" %c", &reiniciar);
+
+    if(reiniciar == 'S' || reiniciar == 's'){
+        zerarRanking();
+    }else{
+        return;
+    }
+
+}
+
+void mostrarRanking(){  //Funcao plimpartela();ara mostrar o ranking
+    limparTela();
+
+    printf("*** JOGO DO %s ***\n", nomeJogo);
+    printf("\n");
 
     printf("****************************\n");
     printf("**                        **\n");
@@ -233,7 +256,6 @@ void venceu(){  //Funcao quando venceu
 
     jogador[qntRanking].pontuacao = 0;  //Zera a pontucao
     cont = 0;
-    perdeu = 1;
 
     fclose(arq);    //fecho o arquivo
     arq = fopen("entrada.txt", "r");
@@ -271,9 +293,21 @@ void proximaFase(){  //Funcao de proxima fase
 
     if(opcao == 'S' || opcao == 's'){
         cont++; //Adiciono no contador de fase
-        mainJogo(); //Se = S continua 
+        mainJogo(); //Se = S continua
+        return;
     }else if(opcao == 'N'|| opcao == 'n'){  //Senao volta para o menu principal
-        return;   
+        atualizarRank();    //Atualizo o ranking
+
+        jogador[qntRanking].pontuacao = 0;  //Zera a pontucao
+        cont = 0;
+
+        fclose(arq);    //fecho o arquivo
+        arq = fopen("entrada.txt", "r");
+
+        getchar();
+        getchar();
+
+        return;    //Volto para o menu   
     }
 
 }
@@ -465,6 +499,17 @@ void mainJogo(){    //Funcao principal do jogo
                                 banco3 = linhaMatriz[linha][coluna];
                                 linhaMatriz[linha][coluna] = ' ';
                             }
+                        }else if(linhaMatriz[linha + 1][coluna] == ' '){    //de baixo
+                            if(banco1 == ' '){  //Verifica qual banco esta livre e troca
+                                banco1 = linhaMatriz[linha][coluna];
+                                linhaMatriz[linha][coluna] = ' ';   //Troca o caracter dentro da matriz por ' '
+                            }else if(banco2 == ' '){
+                                banco2 = linhaMatriz[linha][coluna];
+                                linhaMatriz[linha][coluna] = ' ';
+                            }else if(banco3 == ' '){
+                                banco3 = linhaMatriz[linha][coluna];
+                                linhaMatriz[linha][coluna] = ' ';
+                            }
                         }
 
                     }
@@ -508,6 +553,15 @@ void mainJogo(){    //Funcao principal do jogo
                                 }
                             }
                         }else if(linhaMatriz[linha][coluna - 1] == ' '){    //Se for o da esquerda
+                            for(int k = 0; k<5; k++){   //Caso o banco esteja vazio entra nesse banco
+                                if(strcmp(filaEspera[k], "_") == 0){
+                                    filaEspera[k][0] = linhaMatriz[linha][coluna];
+                                    filaEspera[k][1] = '\0';
+                                    linhaMatriz[linha][coluna] = ' ';  //Caracter dentro da matriz vira um espaco
+                                    break;
+                                }
+                            }  
+                        }else if(linhaMatriz[linha + 1][coluna] == ' '){    //Se for o de baixo
                             for(int k = 0; k<5; k++){   //Caso o banco esteja vazio entra nesse banco
                                 if(strcmp(filaEspera[k], "_") == 0){
                                     filaEspera[k][0] = linhaMatriz[linha][coluna];
@@ -573,7 +627,7 @@ void configuracoes(){   //Mostrar as configuracoes
 
     scanf("%d", &opcao); 
     if(opcao == 1){     //Caso 1 = zerar ranking
-        zerarRanking();
+        confirmarReniciar();
     }else if(opcao == 2){   //Caso 2 = menu principal
         menuPrincipal();
     }else{  

@@ -1,0 +1,1 @@
+Foram adicionadas fases extras de dificuldade média, difícil  e hardcore ("medias.txt", "dificeis.txt" e "hardcore.txt"), selecionáveis pelo jogador e tambem a possibilidade de escolher o tamanho da fila de espera sendo de 5 a 1 para aumentar a dificuldade

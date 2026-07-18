@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+//MATRICULA: 261027267
+//Arthur Vitor
 char nomeJogo[33] = "ONIBUS";  //Variavel global de nome do jogo
 int cont = 0;   //contador de fases
 int perdeu = 0;

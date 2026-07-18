@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+//PROJETO DE APC
 //MATRICULA: 261027267
 //Arthur Vitor Da Silva Nepomuceno
 
@@ -10,7 +11,6 @@ int cont = 0;   //contador de fases
 int perdeu = 0;
 int qntRanking = 0;//Contador de pessoas do raking
 
-//Variaveis de dificuldade 
 int tamanhoFila = 5; //quant bancos na fila de espera
 char arquivoAtual[1000] = "entrada.txt";    //Arquivo atual
 
@@ -365,21 +365,24 @@ void setarDificuldade(){ //Funcao de setar a dificuldade
 
         printf("DIMINUIR FILA DE ESPERA\n");
         printf("\n");
-        printf("1 - Medio\n");
-        printf("2 - Dificil\n");
-        printf("3 - Hardcore\n");
-        printf("4 - IMPOSSIVEL!!!");
+        printf("1 - Facil\n");
+        printf("2 - Medio\n");
+        printf("3 - Dificil\n");
+        printf("4 - Hardcore\n");
+        printf("5 - IMPOSSIVEL!!!");
         printf("\n");
 
         scanf("%d", &escolha);
 
         if(escolha == 1){   
-            tamanhoFila = 4;
+            tamanhoFila = 5;
         }else if(escolha == 2){
-            tamanhoFila = 3;
+            tamanhoFila = 4;
         }else if(escolha == 3){
-            tamanhoFila = 2;
+            tamanhoFila = 3;
         }else if(escolha == 4){
+            tamanhoFila = 2;
+        }else if(escolha == 5){
             tamanhoFila = 1;
         }else{
             printf("Numero Invalido\n");
@@ -395,6 +398,7 @@ void setarDificuldade(){ //Funcao de setar a dificuldade
         printf("1 - Facil\n");
         printf("2 - Media\n");
         printf("3 - Dificil\n");
+        printf("4 - Hardcore\n");
         scanf("%d", &escolha);
         
         if(escolha == 1){
@@ -403,6 +407,8 @@ void setarDificuldade(){ //Funcao de setar a dificuldade
             strcpy(arquivoAtual, "medias.txt");
         }else if(escolha == 3){
             strcpy(arquivoAtual, "dificeis.txt");
+        }else if(escolha == 4){
+            strcpy(arquivoAtual, "hardcore.txt");
         }
 
         if(arq != NULL){    //fecho o arquivo anterior
@@ -536,7 +542,7 @@ void mainJogo(){    //Funcao principal do jogo
                         linhaMatriz[linha][coluna] = ' ';
                     }
                 }else{
-                    if(linhaMatriz[linha - 1][coluna] != ' ' && linhaMatriz[linha][coluna - 1] != ' ' && linhaMatriz[linha][coluna + 1] != ' '){      //Se tiver algum caracter na frente e dos lados retorna erro
+                    if(linhaMatriz[linha - 1][coluna] != ' ' && linhaMatriz[linha][coluna - 1] != ' ' && linhaMatriz[linha][coluna + 1] != ' ' && linhaMatriz[linha + 1][coluna] != ' '){      //Se tiver algum caracter na frente e dos lados retorna erro
                         printf("Elemento bloqueado tecle <enter> para voltar");
                         getchar();
                         getchar();
@@ -604,7 +610,7 @@ void mainJogo(){    //Funcao principal do jogo
                     }
 
                 }else{
-                    if(linhaMatriz[linha - 1][coluna] != ' ' && linhaMatriz[linha][coluna + 1] != ' ' && linhaMatriz[linha][coluna - 1] != ' '){      //Se tiver algum caracter na frente e dos lados retorna erro
+                    if(linhaMatriz[linha - 1][coluna] != ' ' && linhaMatriz[linha][coluna + 1] != ' ' && linhaMatriz[linha][coluna - 1] != ' ' && linhaMatriz[linha + 1][coluna] != ' '){      //Se tiver algum caracter na frente e dos lados retorna erro
                         printf("Elemento bloqueado tecle <enter> para voltar");
                         getchar();
                         getchar();

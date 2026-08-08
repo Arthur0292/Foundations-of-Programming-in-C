@@ -16,9 +16,6 @@ int main() {
         for(int j = 0; j<linhas; j++){
             printf("*");
         }
-        for(int j = 0; j<espacos; j++){
-            printf(" ");
-        }
         printf("\n");
         espacos -= 1;
         linhas += 2;
@@ -32,9 +29,6 @@ int main() {
             }
             for(int j = 0; j<linhastronco; j++){
             printf("*");
-            }
-            for(int j = 0; j<espacos; j++){
-            printf(" ");
             }
             printf("\n");
             linhastronco += 2;

@@ -20,12 +20,5 @@ int main(){
 
     printf("%s\n", numeroIn);
 
-
-    
-    
-
-    
-
-
     return 0;
 }

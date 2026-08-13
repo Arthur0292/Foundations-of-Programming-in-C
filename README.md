@@ -35,3 +35,7 @@ To test any of the exercises locally:
 1. Clone the repository:
    ```bash
    git clone [https://github.com/Arthur0292/C.git](https://github.com/Arthur0292/C.git)
+
+## License
+
+This project is licensed under the MIT License.

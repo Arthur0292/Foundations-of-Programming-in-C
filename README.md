@@ -34,9 +34,7 @@ To test any of the exercises locally:
 
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/Arthur0292/Foundations-of-Programming-in-C
-.git](https://github.com/Arthur0292/Foundations-of-Programming-in-C
-.git)
+   git clone [https://github.com/Arthur0292/Foundations-of-Programming-in-C.git](https://github.com/Arthur0292/Foundations-of-Programming-in-C.git)
 
 ## License
 
